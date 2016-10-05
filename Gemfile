@@ -3,11 +3,11 @@ source 'https://rubygems.org'
 ruby '2.2.4'
 
 #自動デプロイcapistrano
-gem 'capistrano'
+gem 'capistrano', '~> 3.2.1'
 gem 'capistrano-rails'
+gem 'capistrano-rbenv'
 gem 'capistrano-bundler'
 gem 'capistrano3-puma' , group: :development
-gem 'capistrano-rbenv' , github: "capistrano/rbenv"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
