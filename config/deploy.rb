@@ -2,7 +2,7 @@
 lock '3.6.1'
 set :application, 'ikemen'
 set :repo_url, 'https://github.com/okamuroshogo/ikemen.git'
-set :branch, 'develop' # デフォルトがmasterなのでこの場合書かなくてもいいです。
+set :branch, 'fix/cap-deploy' # デフォルトがmasterなのでこの場合書かなくてもいいです。
 set :deploy_to, "/home/vagrant/"
 set :scm, :git # capistrano3からgitオンリーになった気がするのでいらないかも?
 
