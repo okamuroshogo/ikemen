@@ -4,6 +4,7 @@ ruby '2.2.4'
 
 #自動デプロイcapistrano
 gem 'capistrano'
+gem "capistrano-bundler"
 gem 'capistrano-rails'
 gem 'capistrano-rbenv'
 gem 'capistrano-bundler'
