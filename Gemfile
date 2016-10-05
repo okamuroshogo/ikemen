@@ -1,9 +1,13 @@
 source 'https://rubygems.org'
 
+ruby '2.2.4'
+
 #自動デプロイcapistrano
-gem 'capistrano', '~> 3.0.1'
+gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-bundler'
+gem 'capistrano3-puma' , group: :development
+gem 'capistrano-rbenv' , github: "capistrano/rbenv"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
@@ -18,7 +22,8 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
+gem 'nokogiri', '~> 1.6', '>= 1.6.7.rc3'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

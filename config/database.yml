@@ -14,8 +14,9 @@ default: &default
   encoding: utf8
   pool: 5
   username: root
-  password:
-  socket: /tmp/mysql.sock
+  password: passwd
+  #socket: /tmp/mysql.sock
+  socket: /var/lib/mysql/mysql.sock
 
 development:
   <<: *default
@@ -49,6 +50,8 @@ test:
 #
 production:
   <<: *default
-  database: src_production
-  username: src
-  password: <%= ENV['SRC_DATABASE_PASSWORD'] %>
+  database: src_development
+  #database: src_production
+  #username: src
+  #password: passwd
+  #password: <%= ENV['SRC_DATABASE_PASSWORD'] %>
