@@ -42,6 +42,7 @@ server '192.168.33.104', user: 'vagrant', roles: %w{web app}, my_property: :my_v
 # fetch(:default_env).merge!(rails_env: :staging)
 
 server '192.168.33.104', user: 'vagrant', roles: %w{app}, ssh_options: {
-  keys: %w(~/.vagrant.d/insecure_private_key),
-  auth_methods: %w(publickey)
+  #keys: %w(~/.vagrant.d/insecure_private_key),
+  #auth_methods: %w(publickey)
+	password: 'vagrant'
 }
