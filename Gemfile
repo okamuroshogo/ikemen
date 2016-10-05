@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.4'
 
 #自動デプロイcapistrano
-gem 'capistrano', '~> 3.2.1'
+gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-rbenv'
 gem 'capistrano-bundler'
