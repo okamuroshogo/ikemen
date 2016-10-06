@@ -10,7 +10,7 @@ class TopController < BaseController
   def callback
     auth = request.env['omniauth.auth']
     user = User.find_by_uid(auth['uid']) || User.create_with_omniauth(auth)
-		getTimeLine
+    getTimeLine
     session[:user_id] = user.id
     redirect_to root_path
   end
