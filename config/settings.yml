@@ -1,0 +1,15 @@
+defaults: &defaults
+
+development:
+  <<: *defaults
+  twitter:
+    consumer_key: 'qGFvGWxeeaW9tPu4pcg6U8P4w'
+    consumer_secret: '1Vol3WXxAwrG4keqQISh8Dkbt27clGp8ttJl7A61tTkqhArwjl'
+    access_token: '3233383531-PcL0wRKemr3lHuLWDAPtl5a5WXDhoj4Uw0BxOS8'
+    access_secret: 'jjPWfncsd3BvvtHrY90WGUs19xAZ97UuwYFb8DQaCrgc2'
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

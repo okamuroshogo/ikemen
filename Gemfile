@@ -2,6 +2,12 @@ source 'https://rubygems.org'
 
 ruby '2.2.4'
 
+#Twitter認証
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'settingslogic'
+gem 'twitter'
+
 #自動デプロイcapistrano
 gem 'capistrano'
 gem "capistrano-bundler"
