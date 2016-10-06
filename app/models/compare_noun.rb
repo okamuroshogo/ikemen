@@ -1,0 +1,2 @@
+class CompareNoun < ApplicationRecord
+end
