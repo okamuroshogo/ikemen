@@ -2,6 +2,14 @@ source 'https://rubygems.org'
 
 ruby '2.2.4'
 
+#dotenv
+gem 'dotenv-rails'
+
+#Twitter認証
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'twitter'
+
 #自動デプロイcapistrano
 gem 'capistrano'
 gem "capistrano-bundler"
