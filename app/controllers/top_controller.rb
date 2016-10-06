@@ -24,8 +24,8 @@ class TopController < BaseController
   private	
     # 自分のタイムラインを取得
     def getTimeLine
-	    Config::CLIENT.home_timeline.each do |tweet|
-			  puts tweet.full_text
-	    end
-	  end
+      Config::CLIENT.home_timeline.each do |tweet|
+        puts tweet.full_text
+      end
+    end
 end
