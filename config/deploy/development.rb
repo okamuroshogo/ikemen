@@ -1,4 +1,4 @@
-set :stage, :staging
+set :stage, :development
 
 # Simple Role Syntax
 # ==================
