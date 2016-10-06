@@ -8,7 +8,6 @@ class TopController < BaseController
     user = User.find_by_uid(auth['uid']) || User.create_with_omniauth(auth)
     session[:user_id] = user.id
     redirect_to root_path
-
   end
 
   def destroy
