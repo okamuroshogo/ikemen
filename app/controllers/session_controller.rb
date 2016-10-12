@@ -4,7 +4,7 @@ class SessionController < ApplicationController
   def callback
     auth = request.env['omniauth.auth']
     user = User.find_by(uid: auth['uid']) || User.create_with_omniauth(auth)
-    Analyze::getTweet(user.uid.to_i)
+#    Analyze::getTweet(user.uid.to_i)
     session[:user_id] = user.id
     redirect_to root_path
   end
