@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006110054) do
+ActiveRecord::Schema.define(version: 20161012024756) do
 
   create_table "compare_nouns", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "noun",       null: false
-    t.integer  "point",      null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "noun",                   null: false
+    t.integer  "point",      default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.index ["noun"], name: "index_compare_nouns_on_noun", using: :btree
   end
 
