@@ -5,28 +5,31 @@ module Analyze
     #twitterから単語を抽出しConpareNounsに種データを追加する
     #############################
     def glow_compare_nouns(compareUser)
-      words = words(compareUser)
+      words = words(compareUser.twitter_id, compareUser.last_tweet)
       words.each do |word|
         compareNoun = CompareNoun.find_or_initialize_by(noun: word)
         #得点処理
-
-        #TODO 1行でupdateできるはず saveとかいらんとおもう
-#        compareNoun.point = compareNoun.point + compareUser.weight
-        #compareNoun.point.to_i += compareUser.weight
-#        compareNoun.save
         compareNoun.update(point: compareNoun.point + compareUser.weight)
 
       end
+      last_save(compareUser, @tweets.first)
     end
 
     ##############################
     # twitterのつぶやきから類似度を算出
     ##############################
     def point_with_twitter_id(twitter_id)
-      words = words_with_twitter_id(twitter_id)
+      point = 0
+      words = words(twitter_id, nil)
       words.each do |word|
         #TODO:得点算出と検索
+        noun = CompareNoun.find_by(noun: word) 
+        next if noun.nil?
+        point += noun.point
       end
+      p "QQQQQQQQQQQQQQQQQQQQ"
+      p point
+      return point
     end
 
     private
@@ -34,18 +37,14 @@ module Analyze
       #############################
       # twitter_idから条件に合う単語リストを取得
       #############################
-      def words(user)
+      def words(twitter_id, last_tweet)
         #最後のtweet_idがなければ過去から全て取得してくる
-        if user.last_tweet.nil?
-          @tweets = tweets(user.twitter_id)
+        if last_tweet.nil?
+          @tweets = tweets(twitter_id)
         else
-          @tweets = tweets_with_last_date(user.twitter_id, user.last_tweet)
+          @tweets = tweets_with_last_date(twitter_id, last_tweet)
         end
-
-        last_save(user, @tweets.first)
-
-        words = analyze(@tweets)
-        return words
+        return analyze(@tweets)
       end
 
       #############################
@@ -54,6 +53,7 @@ module Analyze
       def tweets(twitter_id)
         tweets = []
         ##TODO twitterIDが存在しない時にエラーになる
+        ##TODO 鍵アカウントもエラーになる
         Config::CLIENT.user_timeline(twitter_id).each do |tweet| 
           tweets << tweet
         end
