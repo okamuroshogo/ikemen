@@ -35,23 +35,36 @@ class Morpheme
     # ツイートリストから条件にしたがって単語を取り出す
     ###########################
     def analyze(tweets)
-      result = []
+      #TODO !!result
+      @result = []
       tweets.each do |tweet|
         full_text = url_replacement(tweet.full_text)
-        Kuromoji.tokenize(full_text).each do |noun|
-         noun.each do |pos|
-            pos.split(",").each_with_index do |word,index|
-              #単語は１文字だけの場合も排除
-              #next if !search_list(@@WHITE_PSOS, word) || word.length < 2
-              next if word_filter?(word)
-              p noun[0]
-              result << noun[0]
-              break
-            end
-          end
+        morpheme(full_text)
+      end
+      return @result
+    end
+
+    ############################
+    # Kuromojiライブラリを使いtextを形態素解析する
+    ############################
+    def morpheme(text)
+      Kuromoji.tokenize(text).each do |noun|
+        noun.each do |pos|
+          pos_filter(pos,noun)
         end
       end
-      return result
+    end
+
+    #############################
+    # 品詞が含まれる配列を条件で分類する
+    #############################
+    def pos_filter(pos,noun)
+      pos.split(",").each_with_index do |word,index|
+        next if word_filter?(word)
+        p noun[0]
+        @result << noun[0]
+        break
+      end
     end
 
     #############################
@@ -59,17 +72,11 @@ class Morpheme
     #############################
     def word_filter?(word)
       #文字制限
-      if word.length < 2
-        return true
-      end
+      return true if word.length < 2
       #ブラックリスト
-      if black_pos?(word) || black_word?(word)
-        return true
-      end
+      return true if black_pos?(word) || black_word?(word)
       #ホワイトリスト
-      if white_pos?(word) || white_word?(word)
-        return false
-      end
+      return false if white_pos?(word) || white_word?(word)
       #それ以外
       return true
     end
