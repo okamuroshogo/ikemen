@@ -2,18 +2,28 @@ namespace :ikemen do
   desc "ikemenDBの初期セットアップを行う" 
   task :setup=> :environment do 
     #すべての設定を行う
+
+    #compareユーザーの追加
+    Rake::Task["ikemen:db_user"].execute
+    #単語の追加
+    Rake::Task["ikemen:db_noun"].execute
   end
 
-  desc "compareUserのTweet名詞のみをcompareNounテーブルへ追加" 
+  desc "compareUserのTweetをcompareNounテーブルへ追加" 
   task :db_noun => :environment do 
     #compareUsersを読み込む -> compareNounテーブルの更新
-
+    CompareUser.all.each do |compareUser|
+      Analyze::setCompareNouns(compareUser)
+    end
   end
 
   desc "seedのtwitterIDリストを元に、CompareUsersテーブルへIDを追加" 
   task :db_user => :environment do 
     #compareUsersテーブルをseedから更新
-
-
+    #
+    #CompareUserを全削除
+    CompareUser.delete_all
+    #入れ直す
+    Rake::Task["db:seed"].execute
   end
 end
