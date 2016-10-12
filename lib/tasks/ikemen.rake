@@ -12,8 +12,8 @@ namespace :ikemen do
   desc "compareUserのTweetをcompareNounテーブルへ追加" 
   task :db_noun => :environment do 
     #compareUsersを読み込む -> compareNounテーブルの更新
-    CompareUser.all.each do |compareUser|
-      Analyze::setCompareNouns(compareUser)
+    CompareUser.all.each do |compare_user|
+      Analyze::glow_compare_nouns(compare_user)
     end
   end
 
