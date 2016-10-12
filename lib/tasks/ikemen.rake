@@ -4,15 +4,16 @@ namespace :ikemen do
     #すべての設定を行う
   end
 
-  desc "compareUserのリストのツイートを形態素解析し、名詞のみをcompareNounテーブルへ追加するタスク" 
+  desc "compareUserのTweet名詞のみをcompareNounテーブルへ追加" 
   task :db_noun => :environment do 
     #compareUsersを読み込む -> compareNounテーブルの更新
 
   end
 
-  desc "seedのtwitterIDリストを元に、CompareUsersテーブルへIDを追加する" 
+  desc "seedのtwitterIDリストを元に、CompareUsersテーブルへIDを追加" 
   task :db_user => :environment do 
     #compareUsersテーブルをseedから更新
+
 
   end
 end

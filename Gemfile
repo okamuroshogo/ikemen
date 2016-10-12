@@ -2,6 +2,10 @@ source 'https://rubygems.org'
 
 ruby '2.2.4'
 
+#tweetAnalyze
+gem 'kuromoji'
+gem 'rb-readline'
+
 #dotenv
 gem 'dotenv-rails'
 
@@ -50,6 +54,12 @@ gem 'listen', '~> 3.0.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'bullet'
+  gem 'hirb'
+  gem 'hirb-unicode'
+  gem 'better_errors'
+  gem 'colorize_unpermitted_parameters'
+  gem 'awesome_print'
 end
 
 group :development do
