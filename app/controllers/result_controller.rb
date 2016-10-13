@@ -23,7 +23,11 @@ class ResultController < BaseController
   ##############################
   def view
     @user = User.find_by(id: params[:id])
-    @text = @user.detail
+    if @user.is_hidden
+      #TODO: 404 ページへ飛ばす
+    else
+      @text = @user.detail
+    end
   end
 
   ##############################
