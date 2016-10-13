@@ -10,7 +10,6 @@ module Analyze extend self
       #得点処理
       compareNoun.update(point: compareNoun.point + compareUser.weight)
     end
-    #TODO: 修正が必要
     last_save(compareUser, @tweets.first)
   end
 
