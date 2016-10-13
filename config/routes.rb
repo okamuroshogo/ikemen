@@ -12,6 +12,7 @@ root :to => 'top#index'
   #anlyze/result
   get '/analyze'                          => 'result#loading'
   get '/result/:id'                       => 'result#result'
+  get '/result/view/:id'                  => 'result#view'
   get '/share'                            => 'result#share'
   get '/share_complete'                   => 'result#share_complete'
 
