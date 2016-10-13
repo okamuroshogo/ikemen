@@ -2,6 +2,20 @@ source 'https://rubygems.org'
 
 ruby '2.2.4'
 
+#Active admin
+gem 'activeadmin', github: 'activeadmin'
+gem 'devise'
+gem 'inherited_resources', github: 'activeadmin/inherited_resources'
+gem 'ransack',             github: 'activerecord-hackery/ransack'
+gem 'draper',              '> 3.x'
+
+#短縮URL
+gem 'bitly'
+
+#tweetAnalyze
+gem 'kuromoji'
+gem 'rb-readline'
+
 #dotenv
 gem 'dotenv-rails'
 
@@ -49,6 +63,8 @@ gem 'listen', '~> 3.0.5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'pry-rails'
+  gem 'pry-byebug'
   gem 'byebug', platform: :mri
 end
 
