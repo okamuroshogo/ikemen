@@ -2,6 +2,13 @@ source 'https://rubygems.org'
 
 ruby '2.2.4'
 
+#Active admin
+gem 'activeadmin', github: 'activeadmin'
+gem 'devise'
+gem 'inherited_resources', github: 'activeadmin/inherited_resources'
+gem 'ransack',             github: 'activerecord-hackery/ransack'
+gem 'draper',              '> 3.x'
+
 #短縮URL
 gem 'bitly'
 
