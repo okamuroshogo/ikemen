@@ -1,6 +1,6 @@
 <% if current_user %>
   <%= current_user.twitter_id %> <%= link_to 'ログアウト', logout_path %>
-  <%= link_to '解析開始！', '/analyze' %>
+  <%= link_to '解析開始！', analyze_path %>
 <% else %>
-  <%= link_to 'ログイン', '/auth/twitter' %>
+  <%= link_to 'ログイン', 'auth/twitter' %>
 <% end %>
