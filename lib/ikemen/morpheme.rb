@@ -20,7 +20,7 @@ class Morpheme
   # getter
   #######################
   def words
-    return @words
+    @words
   end
 
   private
@@ -28,7 +28,7 @@ class Morpheme
     #　URLを置換する
     ########################
     def url_replacement(str)
-      return str.gsub(URI.regexp, "")
+      str.gsub(URI.regexp, "")
     end
 
     ###########################
@@ -36,35 +36,33 @@ class Morpheme
     ###########################
     def analyze(tweets)
       #TODO !!result
-      @result = []
+      result = []
       tweets.each do |tweet|
         full_text = url_replacement(tweet.full_text)
-        morpheme(full_text)
+        result.concat(morpheme(full_text))
       end
-      return @result
+      result
     end
 
     ############################
     # Kuromojiライブラリを使いtextを形態素解析する
     ############################
     def morpheme(text)
+      nouns = []
       Kuromoji.tokenize(text).each do |noun|
         noun.each do |pos|
-          pos_filter(pos,noun)
+          pos_filter(pos) == true ? nouns << noun[0] : next
         end
       end
+      nouns
     end
 
     #############################
     # 品詞が含まれる配列を条件で分類する
     #############################
-    def pos_filter(pos,noun)
-      pos.split(",").each_with_index do |word,index|
-        next if word_filter?(word)
-        p noun[0]
-        @result << noun[0]
-        break
-      end
+    def pos_filter(pos)
+      pos.split(",").each{ |word| return true if !word_filter?(word) }
+      false
     end
 
     #############################
@@ -112,11 +110,7 @@ class Morpheme
     #リストに含まれていたらtrue
     ############################
     def search_list(lists, elm)
-      result = false
-      lists.each do |obj|
-        result = true if elm.match(/^#{obj}/)
-      end
-      return result
+      lists.any?{|obj| elm.match(/^#{obj}/) }
     end
 end
 

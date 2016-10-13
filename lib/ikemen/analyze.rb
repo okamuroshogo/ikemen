@@ -50,13 +50,9 @@ module Analyze
       # twitter_idからツイートリストを取得
       #############################
       def tweets(twitter_id)
-        tweets = []
         ##TODO twitterIDが存在しない時にエラーになる
         ##TODO 鍵アカウントもエラーになる
-        Config::CLIENT.user_timeline(twitter_id).each do |tweet| 
-          tweets << tweet
-        end
-        tweets
+        Config::CLIENT.user_timeline(twitter_id)
       end
 
       #############################
@@ -64,12 +60,10 @@ module Analyze
       # (tweetid , last_tweet_id)  -> [tweet]
       #############################
       def tweets_with_last_date(twitter_id, last_date)
-        tweets = []
         ##TODO twitterIDが存在しない時にエラーになる
-        Config::CLIENT.user_timeline(twitter_id, { since_id: last_date }).each do |tweet| 
-          tweets << tweet
-        end
-        tweets
+        ##TODO 鍵アカウントもエラーになる
+        Config::CLIENT.user_timeline(twitter_id)
+        Config::CLIENT.user_timeline(twitter_id, { since_id: last_date })
       end
 
       #############################
