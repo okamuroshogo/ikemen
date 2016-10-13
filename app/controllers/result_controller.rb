@@ -15,6 +15,15 @@ class ResultController < BaseController
   def result
     @user = current_user
     @text = tweet_text
+    current_user.update(detail: @text)
+  end
+
+  ##############################
+  # 他人のページを参照する時
+  ##############################
+  def view
+    @user = User.find_by(id: params[:id])
+    @text = @user.detail
   end
 
   ##############################
