@@ -2,12 +2,12 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # root
-	root :to => 'top#index'
+root :to => 'top#index'
 
   # session
-	get '/auth/:provider/callback', :to     => 'session#callback'
-	post '/auth/:provider/callback', :to    => 'session#callback'
-	get '/logout'                           => 'session#destroy', :as => :logout
+  get '/auth/:provider/callback', :to     => 'session#callback'
+  post '/auth/:provider/callback', :to    => 'session#callback'
+  get '/logout'                           => 'session#destroy', :as => :logout
 
   #anlyze/result
   get '/analyze'                          => 'result#loading'
