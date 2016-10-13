@@ -53,22 +53,22 @@ ActiveRecord::Schema.define(version: 20161013081238) do
 
   create_table "compare_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "twitter_id",                 null: false
+    t.boolean  "is_male",    default: false, null: false
     t.string   "last_tweet"
     t.integer  "weight",                     null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.boolean  "is_male",    default: false, null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "uid",        null: false
     t.string   "twitter_id", null: false
+    t.boolean  "is_hidden"
     t.string   "image_url"
     t.integer  "point"
     t.string   "detail"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean  "is_hidden"
     t.index ["uid"], name: "index_users_on_uid", unique: true, using: :btree
   end
 
