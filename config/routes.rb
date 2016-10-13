@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   get '/analyze'                          => 'result#loading'
   get '/result/:id'                       => 'result#result'
   get '/share'                            => 'result#share'
+  get '/share_complete'                   => 'result#share_complete'
 
 end
