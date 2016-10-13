@@ -1,5 +1,11 @@
-class ChangeLastTweetToCompareUsers < ActiveRecord::Migration[5.0]
+class CreateCompareNouns < ActiveRecord::Migration[5.0]
   def change
-    change_column :compare_users, :last_tweet, :string
+    create_table :compare_nouns do |t|
+      t.string :noun, null: false
+      t.integer :point, null: false
+
+      t.timestamps
+    end
+  add_index :compare_nouns, :noun
   end
 end

@@ -59,12 +59,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'byebug', platform: :mri
-  gem 'bullet'
-  gem 'hirb'
-  gem 'hirb-unicode'
-  gem 'better_errors'
-  gem 'colorize_unpermitted_parameters'
-  gem 'awesome_print'
 end
 
 group :development do

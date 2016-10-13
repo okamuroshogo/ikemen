@@ -30,3 +30,4 @@ namespace :ikemen do
     Rake::Task["db:seed"].execute
   end
 end
+
