@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 ruby '2.2.4'
 
+#短縮URL
+gem 'bitly'
+
 #tweetAnalyze
 gem 'kuromoji'
 gem 'rb-readline'
@@ -53,6 +56,8 @@ gem 'listen', '~> 3.0.5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'pry-rails'
+  gem 'pry-byebug'
   gem 'byebug', platform: :mri
   gem 'bullet'
   gem 'hirb'

@@ -1,0 +1,11 @@
+<p>結果表示</p>
+<p>あなたのイケメン度は<%= @user.point  %>点です！！</p>
+
+
+<p><%= text_area_tag 'word', @text, placeholder: "入力してください", class: "form-control input-search-word", size: "30x10", :readonly => true  %></p>
+
+<%= link_to 'シェアする', '/share' %>
+<%= link_to 'topへ', '/logout' %>
+
+
+
