@@ -16,4 +16,7 @@ root :to => 'top#index'
   get '/share'                            => 'result#share'
   get '/share_complete'                   => 'result#share_complete'
 
+  #404 error
+  get '*path', controller: 'application', action: 'render_404'
+
 end

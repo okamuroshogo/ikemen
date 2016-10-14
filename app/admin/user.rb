@@ -13,5 +13,6 @@ ActiveAdmin.register User do
 #   permitted
 # end
 
+permit_params :is_hidden, :point
 
 end

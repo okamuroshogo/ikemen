@@ -1,8 +1,6 @@
 <p>結果表示</p>
 <p><%= @user.twitter_id %>さんのイケメン度は<%= @user.point  %>点でした</p>
 
-<p><%= text_area_tag 'word', @text, placeholder: "入力してください", class: "form-control input-search-word", size: "30x10", :readonly => true  %></p>
-
 <%= link_to '診断してみる', logout_path %>
 
 
