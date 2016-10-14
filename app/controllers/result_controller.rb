@@ -24,7 +24,8 @@ class ResultController < BaseController
   def view
     @user = User.find_by(id: params[:id])
     if @user.is_hidden
-      #TODO: 404 ページへ飛ばす
+      # アクセスが許可されていないので404 ページへ飛ばす
+      redirect_to action: 'render_404'
     else
       @text = @user.detail
     end
