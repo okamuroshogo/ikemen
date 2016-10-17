@@ -59,14 +59,14 @@ namespace :deploy do
       end
     end
   end
-end
 
-desc "Set Environment Values"
-task :set_env_values do
-  on roles(:all) do
-    within release_path do
-      env_config = "/home/ec2-user/shared/.env"
-      execute :cp, "#{env_config} ./.env"
+  desc "Set Environment Values"
+  task :set_env_values do
+    on roles(:all) do
+      within release_path do
+        env_config = "/home/ec2-user/shared/.env"
+        execute :cp, "#{env_config} ./.env"
+      end
     end
   end
 end
@@ -80,5 +80,7 @@ namespace :puma do
     end
   end
 
+  before "deploy:updated", "deploy:set_env_values"
   before :start, :make_dirs
+
 end
