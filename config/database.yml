@@ -31,7 +31,9 @@ test:
 
 staging:
   <<: *default
-  socket: /var/lib/mysql/mysql.sock
+  socket: <%= ENV['MYSQL_SOCKET'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
   database: src_development
 
 # As with config/secrets.yml, you never want to store sensitive information,
@@ -55,8 +57,7 @@ staging:
 #
 production:
   <<: *default
-  database: src_development
-  #database: src_production
-  #username: src
-  #password: passwd
-  #password: <%= ENV['SRC_DATABASE_PASSWORD'] %>
+  socket: <%= ENV['MYSQL_SOCKET'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
+  database: src_production
