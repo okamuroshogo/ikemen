@@ -61,6 +61,16 @@ namespace :deploy do
   end
 end
 
+desc "Set Environment Values"
+task :set_env_values do
+  on roles(:all) do
+    within release_path do
+      env_config = "/home/ec2-user/shared/.env"
+      execute :cp, "#{env_config} ./.env"
+    end
+  end
+end
+
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
   task :make_dirs do
