@@ -8,6 +8,11 @@ class Morpheme
   #個別に条件を指定したいワードリスト
   @@WHITE_WORDS = []
   @@BLACK_WORDS = []
+  #ツイート文で置換しておきたい正規表現リスト
+  @@SPASE_REGEXP = /[[:space:]]/
+  @@HALF_SYMBOLE = "\\p{Punct}" #半角記号
+  @@FULL_SYMBOLE = "！”＃＄％＆’（）＝～｜‘｛＋＊｝＜＞？＿－＾￥＠「；：」、。・" #全角記号
+  @@REGEXP_LIST = [URI.regexp, @@SPASE_REGEXP]
 
   ########################
   # initialyzer
@@ -25,20 +30,23 @@ class Morpheme
 
   private
     ########################
-    #　URLを置換する
+    #　tweetを置換する
     ########################
-    def url_replacement(str)
-      str.gsub(URI.regexp, "")
+    def tweet_replacement(tweet)
+      str = tweet
+      @@REGEXP_LIST.each do |regexp|
+        str = str.gsub(regexp, "")
+      end
+      str
     end
 
     ###########################
     # ツイートリストから条件にしたがって単語を取り出す
     ###########################
     def analyze(tweets)
-      #TODO !!result
       result = []
       tweets.each do |tweet|
-        full_text = url_replacement(tweet.full_text)
+        full_text = tweet_replacement(tweet.full_text)
         result.concat(morpheme(full_text))
       end
       result
@@ -49,34 +57,46 @@ class Morpheme
     ############################
     def morpheme(text)
       nouns = []
-      Kuromoji.tokenize(text).each do |noun|
-        noun.each do |pos|
-          pos_filter(pos) == true ? nouns << noun[0] : next
+      Kuromoji.tokenize(text).each do |kuromoji_array|
+        kuromoji_array.each do |pos_array|
+          kuromoji_filter(pos_array) == true ? next : nouns << kuromoji_array[0]
         end
       end
       nouns
     end
 
     #############################
-    # 品詞が含まれる配列を条件で分類する
+    # 品詞が含まれる配列を条件で分類する trueでスキップ
     #############################
-    def pos_filter(pos)
-      pos.split(",").each{ |word| return true if !word_filter?(word) }
-      false
+    def kuromoji_filter(pos_array)
+      pos_array.split(",").each_with_index do |pos_and_word,i|
+        return true if (i == 0 ? word_filter?(pos_and_word) : pos_filter?(pos_and_word))
+      end
     end
 
+    #############################
+    # 抽出する品詞の条件を指定 true でスキップ
+    #############################
+    def pos_filter?(pos)
+      #ブラックリスト
+      return true if black_pos?(pos) 
+      #ホワイトリスト
+      return false if white_pos?(pos) 
+      #それ以外
+      return true
+    end
     #############################
     # 抽出する単語の条件を指定 true でスキップ
     #############################
     def word_filter?(word)
-      #文字制限
+      #単語の文字数を制限
       return true if word.length < 2
       #ブラックリスト
-      return true if black_pos?(word) || black_word?(word)
+      return true if black_word?(word) 
       #ホワイトリスト
-      return false if white_pos?(word) || white_word?(word)
+      return false if white_word?(word) 
       #それ以外
-      return true
+      return false
     end
     #############################
     # 品詞のホワイトリストに含まれていたらtrue

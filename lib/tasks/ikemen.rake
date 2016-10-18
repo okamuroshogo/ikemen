@@ -29,5 +29,15 @@ namespace :ikemen do
     #入れ直す
     Rake::Task["db:seed"].execute
   end
+
+  desc "twitter_idを指定して、イケメン度を算出 [ rails ikemen:point TWITTER_ID='xxxxxxxxxxx' ]"
+  task :point => :environment do
+    twitter_id = ENV['TWITTER_ID'].to_s
+    puts "."
+    puts ".."
+    puts "..."
+    point = Analyze::point_with_twitter_id(twitter_id)
+    puts "point -> #{point}"
+  end
 end
 

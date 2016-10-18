@@ -31,8 +31,10 @@ test:
 
 staging:
   <<: *default
-  database: src_test
-
+  socket: <%= ENV['MYSQL_SOCKET'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
+  database: src_development
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -55,8 +57,7 @@ staging:
 #
 production:
   <<: *default
-  database: src_development
-  #database: src_production
-  #username: src
-  #password: passwd
-  #password: <%= ENV['SRC_DATABASE_PASSWORD'] %>
+  socket: <%= ENV['MYSQL_SOCKET'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
+  database: src_production
