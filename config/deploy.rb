@@ -81,9 +81,17 @@ namespace :puma do
     end
   end
 
+  desc 'Puma stop'
+  task :make_dirs do
+    on roles(:app) do
+      invoke 'puma:stop'
+    end
+  end
+
 
   before "deploy:updated", "deploy:set_env_values"
   before :start, :make_dirs
+  before "deploy:publishing", "puma:stop"
 
 
 end
