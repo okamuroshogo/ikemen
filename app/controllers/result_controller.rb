@@ -4,7 +4,7 @@ class ResultController < BaseController
   # 解析する
   ###############################
   def loading
-    point = Analyze::point_with_twitter_id(current_user.twitter_id)
+    point = Analyze::point_with_twitter_id(current_user.twitter_id, male?)
     current_user.update(point: point)
     redirect_to action: 'result' , id: current_user.id
   end
@@ -67,6 +67,16 @@ class ResultController < BaseController
         config.access_token = ENV['BITLY_TOKEN']
       end
       Bitly.client.shorten(url).short_url
+    end
+
+    ###########################
+    # paramの性別を変換する
+    ###########################
+    def male?
+      gender = params[:gender]
+      return true if gender == "male"
+      return false if gender == "female"
+      nil
     end
 end
 

@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 ruby '2.2.4'
 
+#slim
+gem 'slim-rails'
+
 #Active admin
 gem 'activeadmin', github: 'activeadmin'
 gem 'devise'

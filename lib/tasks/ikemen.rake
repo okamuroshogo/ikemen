@@ -30,13 +30,15 @@ namespace :ikemen do
     Rake::Task["db:seed"].execute
   end
 
-  desc "twitter_idを指定して、イケメン度を算出 [ rails ikemen:point TWITTER_ID='xxxxxxxxxxx' ]"
+  desc "twitter_idを指定して、イケメン度を算出 [ rails ikemen:point TWITTER_ID='xxxxxxxxxxx' IS_MALE=0 or 1]"
   task :point => :environment do
     twitter_id = ENV['TWITTER_ID'].to_s
+    #TODO true false 変換メソッドを定義
+    is_male = ENV['IS_MALE'].to_i == 1 ? true : false
     puts "."
     puts ".."
     puts "..."
-    point = Analyze::point_with_twitter_id(twitter_id)
+    point = Analyze::point_with_twitter_id(twitter_id, is_male)
     puts "point -> #{point}"
   end
 end
