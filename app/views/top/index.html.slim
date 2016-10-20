@@ -1,0 +1,13 @@
+- if current_user
+  = current_user.twitter_id
+  = link_to 'ログアウト', logout_path
+  |  性別を選択してください
+  = form_tag('/analyze', method: "get") do
+    | 男性
+    = radio_button_tag 'gender', 'male', {:checked => true}
+    | 女性
+    = radio_button_tag 'gender', 'female'
+    = submit_tag '解析開始'
+- else
+  = link_to 'ログイン', 'auth/twitter'
+

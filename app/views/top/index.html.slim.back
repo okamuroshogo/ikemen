@@ -1,0 +1,16 @@
+- if current_user
+  = current_user.twitter_id
+  = link_to 'ログアウト', logout_path
+  br
+  br
+  |  性別を選択してください
+  br
+  | 男性
+  = radio_button 'radio', 'is_male', 'true', {:checked => true}
+  | 女性
+  = radio_button 'radio', 'is_male', 'false', {}
+  br
+  br
+  = link_to '解析開始！', analyze_path
+- else
+  = link_to 'ログイン', 'auth/twitter'

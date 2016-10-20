@@ -3,16 +3,17 @@ require "uri"
 class Morpheme
 
   #品詞-> part of speech (複数形 parts of speech)
-  @@WHITE_PSOS = ["名詞","形容詞"]
-  @@BLACK_PSOS = []
+  WHITE_PSOS = ["名詞","形容詞"]
+  BLACK_PSOS = []
   #個別に条件を指定したいワードリスト
-  @@WHITE_WORDS = []
-  @@BLACK_WORDS = []
+  WHITE_WORDS = []
+  BLACK_WORDS = []
   #ツイート文で置換しておきたい正規表現リスト
-  @@SPASE_REGEXP = /[[:space:]]/
-  @@HALF_SYMBOLE = "\\p{Punct}" #半角記号
-  @@FULL_SYMBOLE = "！”＃＄％＆’（）＝～｜‘｛＋＊｝＜＞？＿－＾￥＠「；：」、。・" #全角記号
-  @@REGEXP_LIST = [URI.regexp, @@SPASE_REGEXP]
+  SPASE_REGEXP = /(^.*[[:space:]])*/
+#  @@HALF_SYMBOLE = "\\p{Punct}" #半角記号
+#  @@FULL_SYMBOLE = "！”＃＄％＆’（）＝～｜‘｛＋＊｝＜＞？＿－＾￥＠「；：」、。・" #全角記号
+  UNICODE_REGEXP = /(^.*[\u0080-\u009F])*/
+  REGEXP_LIST = [URI.regexp, SPASE_REGEXP, UNICODE_REGEXP]
 
   ########################
   # initialyzer
@@ -34,7 +35,7 @@ class Morpheme
     ########################
     def tweet_replacement(tweet)
       str = tweet
-      @@REGEXP_LIST.each do |regexp|
+      REGEXP_LIST.each do |regexp|
         str = str.gsub(regexp, "")
       end
       str
@@ -102,28 +103,28 @@ class Morpheme
     # 品詞のホワイトリストに含まれていたらtrue
     #############################
     def white_pos?(word)
-      search_list(@@WHITE_PSOS,word)
+      search_list(WHITE_PSOS,word)
     end
 
     #############################
     # 品詞のブラックリストに含まれていたらtrue
     #############################
     def black_pos?(word)
-      search_list(@@BLACK_PSOS,word)
+      search_list(BLACK_PSOS,word)
     end
 
     #############################
     # 単語のホワイトリストに含まれていたらtrue
     #############################
     def white_word?(word)
-      search_list(@@BLACK_WORDS,word)  
+      search_list(BLACK_WORDS,word)  
     end
 
     #############################
     # 単語のブラックリストに含まれていたらtrue
     #############################
     def black_word?(word)
-      search_list(@@BLACK_WORDS,word)
+      search_list(BLACK_WORDS,word)
     end
 
     #############################

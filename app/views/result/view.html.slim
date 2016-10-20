@@ -1,0 +1,8 @@
+p
+  | 結果表示
+p
+  = @user.twitter_id
+  | さんのイケメン度は
+  = @user.point
+  | 点でした
+= link_to '診断してみる', logout_path

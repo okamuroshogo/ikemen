@@ -18,6 +18,8 @@ Bundler.require(*Rails.groups)
 
 module Src
   class Application < Rails::Application
+    #デフォルトでslimを使う設定
+    config.generators.template_engine = :slim  
     config.enable_dependency_loading = true
     #config.autoload_paths += %W(#{config.root}/lib)
 
