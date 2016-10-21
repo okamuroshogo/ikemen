@@ -6,6 +6,7 @@ class ResultController < BaseController
   def loading
     point = Analyze::point_with_twitter_id(current_user.twitter_id, male?)
     current_user.update(point: point)
+#    p current_user.update.calculate
     redirect_to action: 'result' , id: current_user.id
   end
 

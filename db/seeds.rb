@@ -19,3 +19,10 @@ AdminUser.find_or_create_by!(email: 'admin@example.com') do | user |
   user.password_confirmation = 'password'
 end
 
+IkemenConfig.find_or_create_by(key: 'user_count') do | user_count |
+  user_count.value = 0
+end
+
+IkemenConfig.find_or_create_by(key: 'point_sum') do | point_sum |
+  point_sum.value = 0
+end
