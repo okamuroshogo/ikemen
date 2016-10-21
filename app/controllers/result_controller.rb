@@ -6,6 +6,7 @@ class ResultController < BaseController
   def loading
     point = Analyze::point_with_twitter_id(current_user.twitter_id, male?)
     current_user.update(point: point)
+#    p current_user.update.calculate
     redirect_to action: 'result' , id: current_user.id
   end
 
@@ -54,7 +55,7 @@ class ResultController < BaseController
     #############################
     def tweet_text
       url = bitly_shorten(ENV['RESULT_URL'].to_s + current_user.id.to_s)
-      ENV['TWITTER_SHARE_TEXT1'].to_s + current_user.point.to_s + ENV['TWITTER_SHARE_TEXT2'].to_s + url.to_s + "\n"
+      ENV['TWITTER_SHARE_TEXT1'].to_s + current_user.deviate.to_s + ENV['TWITTER_SHARE_TEXT2'].to_s + url.to_s + "\n"
     end
 
     ###########################
