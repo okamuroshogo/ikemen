@@ -17,7 +17,7 @@ class User < ApplicationRecord
   # 偏差値を返す
   ################################
   def deviate
-    calculate_deciation_test1
+    calculate_deciation
   end
 
   #------------------------provate-------------------------
@@ -40,21 +40,14 @@ class User < ApplicationRecord
     end
 
     ################################
-    #　標準偏差を使わない偏差値1
+    #　標準偏差を使わない偏差値
     ################################
-    def calculate_deciation_test1
+    def calculate_deciation
       point = self.point
       sum = IkemenConfig.point_sum.value.to_f
       cnt = IkemenConfig.cnt.value.to_f
       ave = sum/cnt
       80 + (point + ave) / 2
-    end
-
-    ################################
-    #　標準偏差を使わない偏差値2
-    ################################
-    def calculate_deciation_test2
-
     end
 
     ################################
