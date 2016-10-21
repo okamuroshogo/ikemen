@@ -40,14 +40,21 @@ class User < ApplicationRecord
     end
 
     ################################
-    #　標準偏差を使わない偏差値
+    #　標準偏差を使わない偏差値1
     ################################
     def calculate_deciation_test1
       point = self.point
       sum = IkemenConfig.point_sum.value.to_f
       cnt = IkemenConfig.cnt.value.to_f
       ave = sum/cnt
-      50 + (point + ave) / cnt * 2
+      80 + (point + ave) / 2
+    end
+
+    ################################
+    #　標準偏差を使わない偏差値2
+    ################################
+    def calculate_deciation_test2
+
     end
 
     ################################
