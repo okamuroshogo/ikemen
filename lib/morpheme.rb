@@ -16,9 +16,10 @@ class Morpheme
   REGEXP_LIST = [URI.regexp, SPASE_REGEXP, UNICODE_REGEXP]
 
   ########################
-  # initialyzer
+  # initialyzer(TEETOBJ)
   ########################
   def initialize(words)
+    return if words.nil?
     @words = analyze(words)
   end 
 
