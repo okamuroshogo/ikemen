@@ -44,10 +44,27 @@ class User < ApplicationRecord
     ################################
     def calculate_deciation
       point = self.point
-      sum = IkemenConfig.point_sum.value.to_f
-      cnt = IkemenConfig.cnt.value.to_f
+      ikemen_info = info_hash(IkemenConfig.deciation_info)
+      sum = ikemen_info['sum'].to_f
+      cnt = ikemen_info['cnt'].to_f
       ave = sum/cnt
-      80 + (point + ave) / 2
+      80 + (point + ave) / 2    
+    end
+
+    ################################
+    # 偏差値算出に必要な値をhashで返す
+    ################################
+    def info_hash(info_array)
+      result = {}
+      info_array.each do | info |
+        case info.key
+        when IkemenConfig::KEY_POINT_SUM
+          result['sum'] = info.value
+        when IkemenConfig::KEY_USER_COUNT
+          result['cnt'] = info.value
+        end
+      end
+      result
     end
 
     ################################
