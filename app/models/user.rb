@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # create or updateされると呼ばれるcall back関数
   after_create :user_created
-  after_update :user_cahnged
+  after_update :user_changed
 
   ################################
   # twitter 認証のcallback がきた
@@ -33,7 +33,7 @@ class User < ApplicationRecord
     ####################################
     # カラムの内容が更新された
     ####################################
-    def user_cahnged
+    def user_changed
       return if self.changes['point'].nil? #カラムチェック
       # カウントは増やさずに偏差値を更新
       update_sum
