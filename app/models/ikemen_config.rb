@@ -1,6 +1,13 @@
 class IkemenConfig < ApplicationRecord
     serialize :value
-    scope :point_sum,     -> { find_by(key: 'point_sum') }
-    scope :cnt,           -> { find_by(key: 'user_count') }
+    KEY_POINT_SUM = 'point_sum'
+    KEY_USER_COUNT = 'user_count'
 
+  def self.cnt
+    find_by(key: KEY_USER_COUNT)
+  end
+
+  def self.point_sum
+    find_by(key: KEY_POINT_SUM)
+  end
 end
