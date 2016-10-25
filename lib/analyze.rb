@@ -20,11 +20,11 @@ module Analyze extend self
     point = 0
     words = words(twitter_id, nil)
     #要素の出現回数をhashに記録
-    count = array_count(words)
+    count_hash = word_count(words)
     #一致した単語を出現回数分掛け算する
     nouns = compare_noun(is_male).where(noun: words.uniq)
     nouns.each do |val|
-      point += count[val.noun] * val.point
+      point += count_hash[val.noun] * val.point
     end
     point
   end
@@ -84,7 +84,7 @@ module Analyze extend self
     ##############################
     #hashで出現回数を数えておく
     ##############################
-    def array_count(arr)
+    def word_count(arr)
       result = Hash.new(0)
       arr.each do |word|
         result[word] += 1 
