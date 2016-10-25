@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # create or updateされると呼ばれるcall back関数
   after_create :user_created
-  after_update :user_cahnged
+  after_update :user_changed
 
   ################################
   # twitter 認証のcallback がきた
@@ -33,7 +33,7 @@ class User < ApplicationRecord
     ####################################
     # カラムの内容が更新された
     ####################################
-    def user_cahnged
+    def user_changed
       return if self.changes['point'].nil? #カラムチェック
       # カウントは増やさずに偏差値を更新
       update_sum
@@ -44,10 +44,27 @@ class User < ApplicationRecord
     ################################
     def calculate_deciation
       point = self.point
-      sum = IkemenConfig.point_sum.value.to_f
-      cnt = IkemenConfig.cnt.value.to_f
+      ikemen_info = info_hash(IkemenConfig.deciation_info)
+      sum = ikemen_info['sum'].to_f
+      cnt = ikemen_info['cnt'].to_f
       ave = sum/cnt
-      80 + (point + ave) / 2
+      80 + (point + ave) / 2    
+    end
+
+    ################################
+    # 偏差値算出に必要な値をhashで返す
+    ################################
+    def info_hash(info_array)
+      result = {}
+      info_array.each do | info |
+        case info.key
+        when IkemenConfig::KEY_POINT_SUM
+          result['sum'] = info.value
+        when IkemenConfig::KEY_USER_COUNT
+          result['cnt'] = info.value
+        end
+      end
+      result
     end
 
     ################################
@@ -55,8 +72,10 @@ class User < ApplicationRecord
     ################################
     def update_cnt
       cnt = IkemenConfig.cnt
-      @cnt = cnt.value.to_i + 1
-      cnt.update(value: @cnt)
+      cnt.with_lock do
+        @cnt = cnt.value.to_i + 1
+        cnt.update(value: @cnt)
+      end
     end
 
     ################################
@@ -65,8 +84,10 @@ class User < ApplicationRecord
     def update_sum
       before =  self.point_was.nil? == true ? 0 : self.point_was
       sum = IkemenConfig.point_sum
-      @sum = sum.value.to_i + self.point.to_i - before
-      sum.update(value: @sum)
+      sum.with_lock do
+        @sum = sum.value.to_i + self.point.to_i - before
+        sum.update(value: @sum)
+      end
     end
 end
 
