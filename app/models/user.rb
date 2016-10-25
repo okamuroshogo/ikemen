@@ -55,8 +55,10 @@ class User < ApplicationRecord
     ################################
     def update_cnt
       cnt = IkemenConfig.cnt
-      @cnt = cnt.value.to_i + 1
-      cnt.update(value: @cnt)
+      cnt.with_lock do
+        @cnt = cnt.value.to_i + 1
+        cnt.update(value: @cnt)
+      end
     end
 
     ################################
@@ -65,8 +67,10 @@ class User < ApplicationRecord
     def update_sum
       before =  self.point_was.nil? == true ? 0 : self.point_was
       sum = IkemenConfig.point_sum
-      @sum = sum.value.to_i + self.point.to_i - before
-      sum.update(value: @sum)
+      sum.with_lock do
+        @sum = sum.value.to_i + self.point.to_i - before
+        sum.update(value: @sum)
+      end
     end
 end
 
