@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013081238) do
+ActiveRecord::Schema.define(version: 20161020052958) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "namespace"
@@ -44,11 +44,12 @@ ActiveRecord::Schema.define(version: 20161013081238) do
   end
 
   create_table "compare_nouns", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "noun",                   null: false
-    t.integer  "point",      default: 0, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.index ["noun"], name: "index_compare_nouns_on_noun", using: :btree
+    t.string   "noun",                       null: false
+    t.integer  "point",      default: 0,     null: false
+    t.boolean  "is_male",    default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["noun", "is_male"], name: "index_compare_nouns_on_noun_and_is_male", unique: true, using: :btree
   end
 
   create_table "compare_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -58,6 +59,13 @@ ActiveRecord::Schema.define(version: 20161013081238) do
     t.integer  "weight",                     null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "ikemen_configs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "key"
+    t.text     "value",      limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

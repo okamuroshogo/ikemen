@@ -3,8 +3,8 @@ lock '3.6.1'
 
 set :application, 'ikemen'
 set :repo_url, 'https://github.com/okamuroshogo/ikemen.git'
-set :branch, 'fix/cap-deploy' # デフォルトがmasterなのでこの場合書かなくてもいいです。
-set :deploy_to, "/home/vagrant/"
+set :branch, 'master' # デフォルトがmasterなのでこの場合書かなくてもいいです。
+set :deploy_to, "/home/ec2-user/"
 set :scm, :git # capistrano3からgitオンリーになった気がするのでいらないかも?
 
 set :format, :pretty
@@ -30,7 +30,8 @@ set :puma_conf, "#{shared_path}/config/puma.rb"
 set :puma_access_log, "#{shared_path}/log/puma_access.log"
 set :puma_error_log, "#{shared_path}/log/puma_error.log"
 set :puma_role, :app
-set :puma_env, fetch(:rack_env, fetch(:rails_env, 'development'))
+#set :puma_env, fetch(:rack_env, fetch(:rails_env, 'development'))
+set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
 set :puma_threads, [0, 16]
 set :puma_workers, 0
 set :puma_worker_timeout, nil
@@ -59,6 +60,16 @@ namespace :deploy do
       end
     end
   end
+
+  desc "Set Environment Values"
+  task :set_env_values do
+    on roles(:all) do
+      within release_path do
+        env_config = "/home/ec2-user/shared/.env"
+        execute :cp, "#{env_config} ./.env"
+      end
+    end
+  end
 end
 
 namespace :puma do
@@ -70,5 +81,19 @@ namespace :puma do
     end
   end
 
+  desc 'Puma stop'
+  task :make_dirs do
+    on roles(:app) do
+      invoke 'puma:stop'
+    end
+  end
+
+
+  before "deploy:updated", "deploy:set_env_values"
   before :start, :make_dirs
+  before "deploy:publishing", "puma:stop"
+
+
 end
+
+

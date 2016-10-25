@@ -6,7 +6,7 @@ module Analyze extend self
   def glow_compare_nouns(compareUser)
     words = words(compareUser.twitter_id, compareUser.last_tweet)
     words.each do |word|
-      compareNoun = CompareNoun.find_or_initialize_by(noun: word)
+      compareNoun = CompareNoun.find_or_initialize_by(noun: word, is_male: compareUser.is_male)
       #得点処理
       compareNoun.update(point: compareNoun.point + compareUser.weight)
     end
@@ -16,15 +16,15 @@ module Analyze extend self
   ##############################
   # twitterのつぶやきから類似度のpointを返す
   ##############################
-  def point_with_twitter_id(twitter_id)
+  def point_with_twitter_id(twitter_id, is_male)
     point = 0
     words = words(twitter_id, nil)
     #要素の出現回数をhashに記録
-    count = array_count(words)
+    count_hash = word_count(words)
     #一致した単語を出現回数分掛け算する
-    nouns = CompareNoun.where(noun: words.uniq)
+    nouns = compare_noun(is_male).where(noun: words.uniq)
     nouns.each do |val|
-      point += count[val.noun] * val.point
+      point += count_hash[val.noun] * val.point
     end
     point
   end
@@ -84,12 +84,19 @@ module Analyze extend self
     ##############################
     #hashで出現回数を数えておく
     ##############################
-    def array_count(arr)
+    def word_count(arr)
       result = Hash.new(0)
       arr.each do |word|
         result[word] += 1 
       end
       result
+    end
+    
+    ##############################
+    # 男性/女性のみの単語リストを取得
+    ##############################
+    def compare_noun(is_male)
+      is_male == true ? CompareNoun.male : CompareNoun.female
     end
 end
 

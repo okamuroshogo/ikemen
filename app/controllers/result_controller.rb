@@ -4,8 +4,9 @@ class ResultController < BaseController
   # 解析する
   ###############################
   def loading
-    point = Analyze::point_with_twitter_id(current_user.twitter_id)
+    point = Analyze::point_with_twitter_id(current_user.twitter_id, male?)
     current_user.update(point: point)
+#    p current_user.update.calculate
     redirect_to action: 'result' , id: current_user.id
   end
 
@@ -24,7 +25,8 @@ class ResultController < BaseController
   def view
     @user = User.find_by(id: params[:id])
     if @user.is_hidden
-      #TODO: 404 ページへ飛ばす
+      # アクセスが許可されていないので404 ページへ飛ばす
+      redirect_to action: 'render_404'
     else
       @text = @user.detail
     end
@@ -53,7 +55,7 @@ class ResultController < BaseController
     #############################
     def tweet_text
       url = bitly_shorten(ENV['RESULT_URL'].to_s + current_user.id.to_s)
-      ENV['TWITTER_SHARE_TEXT1'].to_s + current_user.point.to_s + ENV['TWITTER_SHARE_TEXT2'].to_s + url.to_s + "\n"
+      ENV['TWITTER_SHARE_TEXT1'].to_s + current_user.deviate.to_s + ENV['TWITTER_SHARE_TEXT2'].to_s + url.to_s + "\n"
     end
 
     ###########################
@@ -66,6 +68,16 @@ class ResultController < BaseController
         config.access_token = ENV['BITLY_TOKEN']
       end
       Bitly.client.shorten(url).short_url
+    end
+
+    ###########################
+    # paramの性別を変換する
+    ###########################
+    def male?
+      gender = params[:gender]
+      return true if gender == "male"
+      return false if gender == "female"
+      nil
     end
 end
 
