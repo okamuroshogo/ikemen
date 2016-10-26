@@ -1,24 +1,43 @@
-# ikemen
-真のイケメンを発掘するサービス
+# ikemen.okamu.ro
+[真のイケメンを発掘するサービス](http://ikemen.okamu.ro)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Environment
+### Ruby
+* version 2.2.4
 
-Things you may want to cover:
+### Rails
+* version 5.0.0.1
 
-* Ruby version
+### Rack
+* Puma 3.6.0
 
-* System dependencies
+### Deploy
+* Capistrano 3.6.1
 
-* Configuration
+## Setting
+### Quick start
+```
+$ git clone https://github.com/okamuroshogo/ikemen.git
 
-* Database creation
+$ mv .env.sample .env (edit me)
 
-* Database initialization
+$ bundle install --path=vender/bundler/
 
-* How to run the test suite
+$ bundle exec rails ikemen:setup
 
-* Services (job queues, cache servers, search engines, etc.)
+$ bundle exec rails s
+```
 
-* Deployment instructions
+### Use puma
+```
+$ bundle exec puma -e production -C config/puma.rb
+```
+
+### Deploy
+```
+$ vim config/deploy.rb
+$ vim config/deploy/production.rb
+
+$ bundle exec cap production deploy
+```
 
