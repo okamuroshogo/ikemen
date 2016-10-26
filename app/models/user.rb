@@ -48,7 +48,7 @@ class User < ApplicationRecord
       sum = ikemen_info['sum'].to_f
       cnt = ikemen_info['cnt'].to_f
       ave = sum/cnt
-      80 + (point + ave) / 2    
+      30 + (point - ave) / 2    
     end
 
     ################################

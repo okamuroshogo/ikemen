@@ -9,16 +9,17 @@ class Morpheme
   WHITE_WORDS = []
   BLACK_WORDS = []
   #ツイート文で置換しておきたい正規表現リスト
-  SPASE_REGEXP = /(^.*[[:space:]])*/
+  SPASE_REGEXP = /[[:space:]]/
 #  @@HALF_SYMBOLE = "\\p{Punct}" #半角記号
 #  @@FULL_SYMBOLE = "！”＃＄％＆’（）＝～｜‘｛＋＊｝＜＞？＿－＾￥＠「；：」、。・" #全角記号
-  UNICODE_REGEXP = /(^.*[\u0080-\u009F])*/
-  REGEXP_LIST = [URI.regexp, SPASE_REGEXP, UNICODE_REGEXP]
+  UNICODE_REGEXP = /[\u0080-\u009F]/
+  REGEXP_LIST = [SPASE_REGEXP, UNICODE_REGEXP]
 
   ########################
-  # initialyzer
+  # initialyzer(TEETOBJ)
   ########################
   def initialize(words)
+    return if words.nil?
     @words = analyze(words)
   end 
 
@@ -31,7 +32,7 @@ class Morpheme
 
   private
     ########################
-    #　tweetを置換する
+    #　REGEXP_LISTにマッチした文字を置換する
     ########################
     def tweet_replacement(tweet)
       str = tweet
@@ -41,13 +42,20 @@ class Morpheme
       str
     end
 
+    ########################
+    #　urlを空文字に変換する
+    ########################
+    def url_replacement(tweet)
+      tweet.gsub(URI.regexp, "")
+    end
+
     ###########################
     # ツイートリストから条件にしたがって単語を取り出す
     ###########################
     def analyze(tweets)
       result = []
       tweets.each do |tweet|
-        full_text = tweet_replacement(tweet.full_text)
+        full_text = url_replacement(tweet.full_text)
         result.concat(morpheme(full_text))
       end
       result
@@ -71,7 +79,7 @@ class Morpheme
     #############################
     def kuromoji_filter(pos_array)
       pos_array.split(",").each_with_index do |pos_and_word,i|
-        return true if (i == 0 ? word_filter?(pos_and_word) : pos_filter?(pos_and_word))
+        return true if (i == 0 ? word_filter?(tweet_replacement(pos_and_word)) : pos_filter?(pos_and_word))
       end
     end
 

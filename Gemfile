@@ -65,6 +65,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'listen', '~> 3.0.5'
 
 group :development, :test do
+  #rspec
+  gem 'test-unit'
+  gem 'rspec'
+  gem 'rspec-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'pry-rails'
   gem 'pry-byebug'
