@@ -18,6 +18,10 @@ Bundler.require(*Rails.groups)
 
 module Src
   class Application < Rails::Application
+    #日本語を利用する設定
+    config.time_zone = 'Tokyo'
+    config.i18n.default_locale = :ja
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     #デフォルトでslimを使う設定
     config.generators.template_engine = :slim  
     config.enable_dependency_loading = true

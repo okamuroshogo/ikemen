@@ -1,0 +1,20 @@
+ja:
+  activerecord:
+    models:
+      admin_user: 管理者
+      comment: コメント
+      user: ユーザー
+    attributes:
+      admin_user:
+        email: メールアドレス
+        current_sign_in_at: 最新ログイン日時
+        sign_in_count: ログイン回数
+        created_at: 作成日時
+      user:
+        is_hidden: 表示しない
+        point: 評価値
+        detail: 詳細
+        image_url: 画像パス
+        created_at: 作成日時
+        updated_at: 更新日時
+
